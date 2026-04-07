@@ -1,6 +1,6 @@
 # Fretune
 
-A cross-platform guitar tuning app built with Expo, React Native, and React Native Web. Tune your instruments on mobile
+A cross-platform guitar tuning app built with Expo and React Native. Tune your instruments on mobile
 
 ## Features
 
