@@ -1,0 +1,25 @@
+{
+  "React Arrow Function Component": {
+    "prefix": "rafc",
+    "scope": "typescriptreact",
+    "body": [
+      "import React from \"react\";",
+      "",
+      "interface I${TM_FILENAME_BASE} {",
+      "  $1",
+      "}",
+      "",
+      "export function ${TM_FILENAME_BASE}(props: I${TM_FILENAME_BASE}) {",
+      "  /* ******************** Hooks ******************** */",
+      "  /* ******************** Variables ******************** */",
+      "  /* ******************** Functions ******************** */",
+      "  /* ******************** Effects ******************** */",
+      "  /* ******************** JSX ******************** */",
+      "  return (",
+      "    $0",
+      "  );",
+      "}"
+    ],
+    "description": "React functional component with typed props and section comments"
+  }
+}
