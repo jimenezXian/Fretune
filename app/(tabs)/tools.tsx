@@ -9,7 +9,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 
-export default function TabTwoScreen() {
+export default function ToolsScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}

@@ -8,7 +8,7 @@ import { ThemedView } from '@/components/themed-view';
 import { Link } from 'expo-router';
 import React from 'react';
 
-export default function HomeScreen() {
+export default function TuneScreen() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
