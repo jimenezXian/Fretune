@@ -1,14 +1,10 @@
-import { ThemedView } from '@/components/themed-view';
-import { Collapsible } from '@/components/ui/collapsible';
-import { Icon } from '@/components/ui/Icon';
-import { ThemedText } from '@/components/ui/themed-text';
-import { Fonts } from '@/constants/theme';
-import { Image } from 'expo-image';
+import { Typography } from '@/components/ui';
 import React from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default function ToolsScreen() {
   return (
+    <Typography>{"hello"}</Typography>
   );
 }
 

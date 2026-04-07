@@ -1,13 +1,12 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import * as Sentry from '@sentry/react-native';
+import { Button, StyleSheet } from 'react-native';
 
-import { ThemedView } from '@/components/themed-view';
-import { ThemedText } from '@/components/ui/themed-text';
-import { Link } from 'expo-router';
 import React from 'react';
 
 export default function TuneScreen() {
   return (
+
+    <Button title='Try!' onPress={() => { Sentry.captureException(new Error('First error')) }} />
   );
 }
 
