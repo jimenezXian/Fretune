@@ -28,6 +28,12 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Icon size={28} name="toolbox" color={color} />,
         }}
       />
+      <Tabs.Screen
+        name="(chooseTuning)"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

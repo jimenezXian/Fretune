@@ -1,6 +1,6 @@
-import * as Sentry from '@sentry/react-native';
 import React from "react";
-import { Button } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface ISelectTuningLandingScreen {
 
@@ -8,12 +8,25 @@ interface ISelectTuningLandingScreen {
 
 export default function SelectTuningLandingScreen(props: ISelectTuningLandingScreen) {
     /* ******************** Hooks ******************** */
+    // const { instrument  } = useInstrument();
     /* ******************** Variables ******************** */
     /* ******************** Functions ******************** */
     /* ******************** Effects ******************** */
     /* ******************** JSX ******************** */
     return (
-        <Button title='Try!' onPress={() => { Sentry.captureException(new Error('First error')) }} />
+        <SafeAreaView style={s.container}>
+            <View style={s.content}>
 
+            </View>
+        </SafeAreaView>
     );
 }
+
+const s = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    content: {
+        padding: 24,
+    },
+})
