@@ -35,7 +35,7 @@ export function NavigationBackButton(props: INavigationBackButtonProps) {
   return (
     <NavigationAction
       onPress={handlePress}
-      icon="guitar"
+      icon="chevron-left"
     />
   );
 }

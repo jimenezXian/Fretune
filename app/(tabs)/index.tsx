@@ -1,30 +1,44 @@
-import * as Sentry from '@sentry/react-native';
-import { Button, StyleSheet } from 'react-native';
-
+import { Instrument } from '@/components/Instrument';
+import { NoteTuner } from '@/components/tuning';
+import { Typography } from '@/components/ui';
+import { useSelectedInstrument, useSelectedTuning } from '@/store/useTunerStore';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TuneScreen() {
-  return (
+  const instrument = useSelectedInstrument();
+  const tuning = useSelectedTuning();
 
-    <Button title='Try!' onPress={() => { Sentry.captureException(new Error('First error')) }} />
+  return (
+    <SafeAreaView
+      style={s.container}
+      edges={["top", "bottom"]}>
+      <View style={s.titleContainer}>
+        <Typography variant='h4'>
+          Fretune
+        </Typography>
+        <Instrument name={instrument.name} tuning={tuning.name} />
+      </View>
+      <NoteTuner tuning={tuning} />
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    flexDirection: 'column',
+    gap: 12,
+    padding: 24
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+  // content: {
+  //   flexGrow: 1,
+  //   gap: 16,
+  //   padding: 24, 
+  //   justifyContent: "center",
+  //   position: "relative"
+  // },
 });

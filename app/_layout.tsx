@@ -1,6 +1,6 @@
-import { useColorScheme } from '@/hooks/use-color-scheme';
+// import { useMicrophonePermission } from '@/hooks/useMicrophonePermission';
+import { useColors } from '@/components/ui';
 import { LogService } from '@/services/LogService';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
@@ -14,15 +14,23 @@ export const unstable_settings = {
 };
 
 function RootLayout() {
-  const colorScheme = useColorScheme();
+  // const { granted: microphonePermitted, request } = useMicrophonePermission();
+
+  const { $color } = useColors();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+    // <ThemeProvider value={DefaultTheme}>
+    <>
+      <Stack
+        screenOptions={{
+          contentStyle: { backgroundColor: $color.bg }
+        }}
+      >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       </Stack>
-      <StatusBar style="dark" />
-    </ThemeProvider>
+      <StatusBar style="light" />
+    </>
+    // </ThemeProvider >
   );
 };
 

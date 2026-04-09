@@ -8,6 +8,8 @@ import { TColor, useColors } from './theme';
 const iconMap = {
   guitar: solid.faGuitar ,
   toolbox: solid.faToolbox,
+  "chevron-left": solid.faChevronLeft,
+  "chevron-right": solid.faChevronRight
 } as const;
 
 export type TIconName = keyof typeof iconMap;
