@@ -6,16 +6,15 @@ import { Icon, Typography } from "../ui";
 
 
 interface ITuneSetProps {
-    tuningId: string,
     name: string;
-
+    tuningId: string,
 }
 
 export function TuneSet({ name, tuningId }: ITuneSetProps) {
     /* ******************** Hooks ******************** */
     const router = useRouter();
     const instrument = useSelectedInstrument();
-    
+
     const setTuning = useTunerStore((state) => state.setTuning);
 
     /* ******************** Variables ******************** */
