@@ -1,10 +1,9 @@
-import { StyleSheet, View } from 'react-native';
-
 import { Instrument } from '@/components/Instrument';
-import { TunerRow } from '@/components/tuning/TunerRow';
+import { NoteTuner } from '@/components/tuning';
 import { Typography } from '@/components/ui';
 import { useSelectedInstrument, useSelectedTuning } from '@/store/useTunerStore';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TuneScreen() {
@@ -12,20 +11,16 @@ export default function TuneScreen() {
   const tuning = useSelectedTuning();
 
   return (
-
-
     <SafeAreaView
       style={s.container}
       edges={["top", "bottom"]}>
-      {/* <View style={s.content}> */}
-
       <View style={s.titleContainer}>
-        <Typography variant='h4'> {"Fretune"}</Typography>
+        <Typography variant='h4'>
+          Fretune
+        </Typography>
         <Instrument name={instrument.name} tuning={tuning.name} />
       </View>
-      <TunerRow />
-      {/* </View> */}
-
+      <NoteTuner tuning={tuning} />
     </SafeAreaView>
   );
 }

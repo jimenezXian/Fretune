@@ -1,5 +1,5 @@
 import { DEFAULT_INSTRUMENTS } from "@/constants/instruments";
-import { Instrument, Tuning } from "@/types/tuning";
+import { IInstrument, ITuning } from "@/types/tuning";
 import { createMMKV } from "react-native-mmkv";
 import { create } from "zustand";
 import { createJSONStorage, persist, StateStorage } from "zustand/middleware";
@@ -14,7 +14,7 @@ const mmkvStorage: StateStorage = {
 
 export type TTunerStore = {
   selectedInstrumentId: string;
-  instruments: Instrument[];
+  instruments: IInstrument[];
 
   selectInstrument: (id: string) => void;
   setTuning: (instrumentId: string, tuningId: string) => void;
@@ -46,12 +46,12 @@ export const useTunerStore = create<TTunerStore>()(
   )
 );
 
-export const useSelectedInstrument = (): Instrument =>
+export const useSelectedInstrument = (): IInstrument =>
   useTunerStore((s) =>
     s.instruments.find((i) => i.id === s.selectedInstrumentId) ?? s.instruments[0]
   );
 
-export const useSelectedTuning = (): Tuning => {
+export const useSelectedTuning = (): ITuning => {
   const instrument = useSelectedInstrument();
   return (
     instrument.tunings.find((t) => t.id === instrument.selectedTuningId) ??

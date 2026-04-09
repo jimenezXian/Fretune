@@ -1,6 +1,5 @@
-import { StyleProp, Text, TextStyle, type TextProps } from 'react-native';
-
 import React, { createContext, useContext } from 'react';
+import { StyleProp, Text, TextStyle } from 'react-native';
 import { TColor, useColors } from './theme';
 
 
@@ -14,10 +13,6 @@ interface ITypographyProps {
   align?: "left" | "center" | "right";
   adjust?: boolean;
   flex?: number;
-  ellipsize?: TextProps["ellipsizeMode"];
-  decorationColor?: TextStyle["textDecorationColor"];
-  decorationStyle?: TextStyle["textDecorationStyle"];
-  decorationLine?: TextStyle["textDecorationLine"];
   style?: StyleProp<TextStyle>;
 }
 
@@ -83,9 +78,6 @@ export const Typography = ({
       color: props.rawColor ?? $color[color],
       textAlign: align,
       flex: props.flex,
-      textDecorationStyle: props.decorationStyle,
-      textDecorationColor: props.decorationColor,
-      textDecorationLine: props.decorationLine,
     },
     props.style,
   ];
@@ -95,7 +87,6 @@ export const Typography = ({
       <Text
         numberOfLines={props.lines}
         adjustsFontSizeToFit={props.adjust}
-        ellipsizeMode={props.ellipsize}
         style={composedStyles}
       >
         {props.children}

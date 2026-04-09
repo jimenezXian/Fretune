@@ -1,22 +1,22 @@
-export type Note = "C" | "C#" | "D" | "D#" | "E" | "F" | "F#" | "G" | "G#" | "A" | "A#" | "B";
+export type TNote = "C" | "C#" | "D" | "D#" | "E" | "F" | "F#" | "G" | "G#" | "A" | "A#" | "B";
 
-export type StringTuning = {
-  note: Note;
+export interface IStringTuning {
+  note: TNote;
   frequency: number;
 };
 
-export type Tuning = {
+export interface ITuning {
   id: string;
   name: string;
-  strings: StringTuning[];
+  strings: IStringTuning[];
 };
 
-export type Instrument = {
+export interface IInstrument {
   id: string;
   name: string;
   icon?: string;
   stringCount: number;
-  tunings: Tuning[];
+  tunings: ITuning[];
   selectedTuningId: string;
   isCustom: boolean;
 };

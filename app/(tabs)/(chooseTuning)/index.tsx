@@ -1,4 +1,4 @@
-import { TuneSet } from "@/components/tuning/TuneSet";
+import { TuneSet } from "@/components/chooseTuning/TuneSet";
 import { useColors } from "@/components/ui";
 import { useSelectedInstrument } from "@/store/useTunerStore";
 import React from "react";

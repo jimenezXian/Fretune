@@ -1,11 +1,11 @@
-import { Note } from "@/types/tuning";
+import { TNote } from "@/types/tuning";
 
-const NOTE_NAMES: Note[] = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+const NOTE_NAMES: TNote[] = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 const A4_FREQUENCY = 440;
 const A4_MIDI = 69;
 
 interface IDetectedNote {
-  note: Note;
+  note: TNote;
   octave: number;
   cents: number;
   frequency: number;
