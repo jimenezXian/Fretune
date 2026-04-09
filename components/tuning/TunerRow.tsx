@@ -18,7 +18,6 @@ export function TunerRow(props: ITunerRow) {
                 <Typography variant="h3">♭</Typography>
                 <Typography variant="h3">#</Typography>
             </View>
-
         </View>
     );
 }

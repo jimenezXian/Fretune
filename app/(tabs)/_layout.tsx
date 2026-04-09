@@ -1,18 +1,18 @@
+import { useColors } from '@/components/ui';
+import { Icon } from '@/components/ui/Icon';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { Icon } from '@/components/ui/Icon';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { $color } = useColors();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: $color.primary,
+        sceneStyle: { backgroundColor: $color.bg },
         headerShown: false,
+
       }}>
       <Tabs.Screen
         name="index"

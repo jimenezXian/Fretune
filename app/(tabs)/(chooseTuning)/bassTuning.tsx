@@ -6,7 +6,7 @@ interface IbassTuning {
   
 }
 
-export default function bassTuninScreen(props: IbassTuning) {
+export default function bassTuningScreen(props: IbassTuning) {
   /* ******************** Hooks ******************** */
   /* ******************** Variables ******************** */
   /* ******************** Functions ******************** */

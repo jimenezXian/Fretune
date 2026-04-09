@@ -21,7 +21,7 @@ export type TColor = keyof TColorMap;
 export type TSize = "sm" | "md" | "lg";
 
 const lightTheme: TColorMap = {
-  bg: "#fafafa",
+  bg: "#ffffff",
   textInverted: "#f2f2f2",
   text: "#0b0b0b",
   textMuted: "#6c757d",

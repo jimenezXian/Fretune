@@ -15,6 +15,9 @@ export default function ToolsScreen() {
         <SafeAreaView
             style={s.container}
             edges={["top", "bottom"]}>
+            <View style={s.titleContainer}>
+                <Typography variant="h4" >Tools</Typography>
+            </View>
             <View style={s.content}>
                 <TouchableOpacity onPress={() => router.navigate("/(tabs)/tools/chromaticTuner")} style={s.listItem}>
                     <Typography variant='p1'>
@@ -31,7 +34,10 @@ const s = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "white"
-
+    }, titleContainer: {
+        flexDirection: 'column',
+        gap: 12,
+        padding: 24
     },
     content: {
         paddingHorizontal: 24,
