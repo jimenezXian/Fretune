@@ -2,14 +2,12 @@ import { TuneSet } from "@/components/tuning/TuneSet";
 import { useColors } from "@/components/ui";
 import { useSelectedInstrument } from "@/store/useTunerStore";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-interface ISelectTuningLandingScreen {
 
-}
 
-export default function SelectTuningLandingScreen(props: ISelectTuningLandingScreen) {
+export default function SelectTuningLandingScreen() {
     /* ******************** Hooks ******************** */
     const instrument = useSelectedInstrument();
     const { $color } = useColors();
@@ -21,11 +19,9 @@ export default function SelectTuningLandingScreen(props: ISelectTuningLandingScr
     /* ******************** JSX ******************** */
     return (
         <SafeAreaView style={s.container}>
-            <View style={s.content}>
-                {tunings.map((item) => (
-                    <TuneSet key={item.id} name={item.name} tuningId={item.id} style={[s.listItem, { borderColor: $color.borderLight }]} />
-                ))}
-            </View>
+            {tunings.map((item) => (
+                <TuneSet key={item.id} name={item.name} tuningId={item.id} style={[s.listItem, { borderColor: $color.borderLight }]} />
+            ))}
         </SafeAreaView>
     );
 }
@@ -34,9 +30,7 @@ const s = StyleSheet.create({
     container: {
         flex: 1,
     },
-    content: {
-        padding: 24,
-    },
+
     listItem: {
         padding: 24,
         borderTopWidth: 2,
