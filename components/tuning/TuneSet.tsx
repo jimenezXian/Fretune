@@ -1,16 +1,17 @@
 import { useSelectedInstrument, useTunerStore } from "@/store/useTunerStore";
 import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 import { Icon, Typography } from "../ui";
 
 
 interface ITuneSetProps {
     name: string;
     tuningId: string,
+    style?: StyleProp<ViewStyle>
 }
 
-export function TuneSet({ name, tuningId }: ITuneSetProps) {
+export function TuneSet({ name, tuningId, style }: ITuneSetProps) {
     /* ******************** Hooks ******************** */
     const router = useRouter();
     const instrument = useSelectedInstrument();
@@ -27,7 +28,7 @@ export function TuneSet({ name, tuningId }: ITuneSetProps) {
     /* ******************** Effects ******************** */
     /* ******************** JSX ******************** */
     return (
-        <TouchableOpacity onPress={selectTuning} style={s.container}>
+        <TouchableOpacity onPress={selectTuning} style={[s.container, style]}>
             <Typography variant="p1">
                 {name}
             </Typography>
