@@ -28,7 +28,9 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 export function TuneGauge({ rawCents, isActive, frequency, smoothing = 0.15 }: ITuneGauge) {
     /* ******************** Hooks ******************** */
     const { $color } = useColors();
-    const displayCents = useSmoothedCents(rawCents, isActive ? frequency : null, smoothing);
+
+    const activeFrequency = isActive ? frequency : null;
+    const displayCents = useSmoothedCents(rawCents, activeFrequency, smoothing);
     const needlePosition = useSharedValue(0);
 
     /* ******************** Variables ******************** */

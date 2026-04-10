@@ -20,7 +20,6 @@ export function NoteTuner({ tuning }: INoteTuner) {
 
     /* ******************** Variables ******************** */
     const activeString: IStringTuning = tuning.strings[selectedNote]
-
     const detectedNote = frequency ? frequencyToNote(frequency) : null;
 
     const centsFromTarget = detectedNote && activeString
@@ -42,24 +41,28 @@ export function NoteTuner({ tuning }: INoteTuner) {
             <TuneGauge rawCents={rawCents} isActive={!!isValidReading} frequency={frequency} />
 
             <View style={s.noteGrouping}>
-                {tuning.strings.map((string, index) => (
-                    <TouchableOpacity
-                        onPress={() => handleNotePress(index, string)}
-                        key={string.frequency}
-                        style={[
-                            s.noteContainer,
-                            { borderColor: $color.borderDark },
-                            activeString?.frequency === string.frequency && { borderColor: $color.info, backgroundColor: $color.borderDark },
-                        ]}
-                    >
-                        <Typography>
-                            {string.note}
-                            <Typography variant="p4">
-                                {string.octave}
+                {tuning.strings.map((string, index) => {
+                    const isSelected = activeString?.frequency === string.frequency;
+
+                    return (
+                        <TouchableOpacity
+                            onPress={() => handleNotePress(index, string)}
+                            key={string.frequency}
+                            style={[
+                                s.noteContainer,
+                                { borderColor: $color.borderDark },
+                                isSelected && { borderColor: $color.info, backgroundColor: $color.borderDark },
+                            ]}
+                        >
+                            <Typography>
+                                {string.note}
+                                <Typography variant="p4">
+                                    {string.octave}
+                                </Typography>
                             </Typography>
-                        </Typography>
-                    </TouchableOpacity>
-                ))}
+                        </TouchableOpacity>
+                    );
+                })}
             </View>
         </View >
     );

@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { TColor, useColors } from './theme';
 
 const iconMap = {
-  guitar: solid.faGuitar ,
+  guitar: solid.faGuitar,
   toolbox: solid.faToolbox,
   "chevron-left": solid.faChevronLeft,
   "chevron-right": solid.faChevronRight

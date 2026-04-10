@@ -12,19 +12,18 @@ export default function ChromaticTunerScreen() {
 
   /* ******************** Variables ******************** */
   const detectedNote = frequency ? frequencyToNote(frequency) : null;
-  const cents = detectedNote?.cents ?? 0;
+  const { note = "--", octave = "", cents = 0, frequency: detectedHz = 0 } = detectedNote ?? {};
 
   /* ******************** JSX ******************** */
   return (
     <SafeAreaView style={s.container}>
       <View style={s.noteContainer}>
-        <Typography variant="h1" color={detectedNote ? undefined : "textMuted"}>
-          {detectedNote ? detectedNote.note : ""}
-          <Typography variant="p1" color="textMuted">
-            {detectedNote ? `${detectedNote.octave}` : ""}
+        <Typography variant="h1">
+          {note}
+          <Typography variant="p1">
+            {octave}
           </Typography>
         </Typography>
-
       </View>
 
       <View style={s.gaugeWrapper}>
@@ -33,7 +32,7 @@ export default function ChromaticTunerScreen() {
 
       <View style={s.frequencyContainer}>
         <Typography variant="p2" color="textMuted">
-          {detectedNote ? `${detectedNote.frequency.toFixed(1)} Hz` : "Listening..."}
+          {detectedNote ? `${detectedHz.toFixed(1)} Hz` : "Listening..."}
         </Typography>
       </View>
     </SafeAreaView>
