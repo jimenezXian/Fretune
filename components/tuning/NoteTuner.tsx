@@ -2,7 +2,7 @@ import { useColors } from "@/components/ui/theme";
 import { usePitchDetection } from "@/hooks/usePitchDetection";
 import { IStringTuning, ITuning } from "@/types/tuning";
 import { frequencyToNote } from "@/utils/noteUtils";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
     interpolateColor,
@@ -26,6 +26,8 @@ export function NoteTuner({ tuning }: INoteTuner) {
     const { $color } = useColors();
 
     const [selectedNote, setSelectedNote] = useState(0);
+    const [displayCents, setDisplayCents] = useState(0);
+    const smoothedCents = useRef(0);
 
     const needlePosition = useSharedValue(0);
     /* ******************** Variables ******************** */
@@ -33,12 +35,16 @@ export function NoteTuner({ tuning }: INoteTuner) {
 
     const detectedFrequency = frequency ? frequencyToNote(frequency) : null;
 
-    const rawCents = detectedFrequency && activeString
+    // Ignore frequencies more than an octave away from target (garbage/ambient noise)
+    const isRelevant = detectedFrequency && activeString
+        && Math.abs(1200 * Math.log2(detectedFrequency.frequency / activeString.frequency)) < 600;
+
+    const rawCents = isRelevant
         ? Math.round(1200 * Math.log2(detectedFrequency.frequency / activeString.frequency))
         : 0;
 
-    const centsInBounds = Math.max(-100, Math.min(100, rawCents));
-    const isOutOfBounds = Math.abs(rawCents) > 100;
+    const centsInBounds = Math.max(-100, Math.min(100, displayCents));
+    const isOutOfBounds = Math.abs(displayCents) > 100;
 
 
     /* ******************** Functions ******************** */
@@ -59,6 +65,24 @@ export function NoteTuner({ tuning }: INoteTuner) {
 
     /* ******************** Effects ******************** */
     useEffect(() => {
+        if (!frequency || !isRelevant) {
+            smoothedCents.current = 0;
+            setDisplayCents(0);
+            return;
+        }
+
+        const SMOOTHING = 0.15;
+        const DEAD_ZONE = 3;
+
+        smoothedCents.current = smoothedCents.current * (1 - SMOOTHING) + rawCents * SMOOTHING;
+        const rounded = Math.round(smoothedCents.current);
+
+        if (Math.abs(rounded - displayCents) >= DEAD_ZONE) {
+            setDisplayCents(rounded);
+        }
+    }, [frequency]);
+
+    useEffect(() => {
         needlePosition.value = withSpring((centsInBounds + 100) / 200, SPRINGINESS_CONFIG);
     }, [centsInBounds]);
 
@@ -70,7 +94,7 @@ export function NoteTuner({ tuning }: INoteTuner) {
                 <View style={s.tuneDirectionLabel}>
                     {isOutOfBounds && detectedFrequency && (
                         <Typography variant="p2" color="danger">
-                            {rawCents > 0 ? "Tune down" : "Tune up"}
+                            {displayCents > 0 ? "Tune down" : "Tune up"}
                         </Typography>
                     )}
                 </View>
@@ -116,11 +140,14 @@ export function NoteTuner({ tuning }: INoteTuner) {
                     >
                         <Typography>
                             {string.note}
+                            <Typography variant="p4">
+                                {string.octave}
+                            </Typography>
                         </Typography>
                     </TouchableOpacity>
                 ))}
             </View>
-        </View>
+        </View >
     );
 }
 

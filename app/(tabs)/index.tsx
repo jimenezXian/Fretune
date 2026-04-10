@@ -1,14 +1,18 @@
+import { bassGuitarImage } from '@/assets/images';
 import { Instrument } from '@/components/Instrument';
 import { NoteTuner } from '@/components/tuning';
 import { Typography } from '@/components/ui';
 import { useSelectedInstrument, useSelectedTuning } from '@/store/useTunerStore';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TuneScreen() {
   const instrument = useSelectedInstrument();
   const tuning = useSelectedTuning();
+
+  const { width, height } = Dimensions.get('window');
+
 
   return (
     <SafeAreaView
@@ -21,6 +25,10 @@ export default function TuneScreen() {
         <Instrument name={instrument.name} tuning={tuning.name} />
       </View>
       <NoteTuner tuning={tuning} />
+      <Image source={bassGuitarImage}
+        style={[s.bassImage,
+        { width: width * 0.6, height: height * 0.6 }]}
+      />
     </SafeAreaView>
   );
 }
@@ -28,17 +36,20 @@ export default function TuneScreen() {
 const s = StyleSheet.create({
   container: {
     flex: 1,
+    overflow: "hidden",
   },
   titleContainer: {
     flexDirection: 'column',
     gap: 12,
     padding: 24
   },
-  // content: {
-  //   flexGrow: 1,
-  //   gap: 16,
-  //   padding: 24, 
-  //   justifyContent: "center",
-  //   position: "relative"
-  // },
+  bassImage: {
+    zIndex: -1,
+    position: "absolute",
+    width: "75%",
+    height: "75%",
+    alignSelf: "center",
+    resizeMode: "contain",
+    bottom: -50,
+  }
 });

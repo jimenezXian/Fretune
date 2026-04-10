@@ -1,0 +1,1 @@
+export const bassGuitarImage = require("./bassGuitar.png")

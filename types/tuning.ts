@@ -2,6 +2,7 @@ export type TNote = "C" | "C#" | "D" | "D#" | "E" | "F" | "F#" | "G" | "G#" | "A
 
 export interface IStringTuning {
   note: TNote;
+  octave: number;
   frequency: number;
 };
 
