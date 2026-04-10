@@ -1,4 +1,4 @@
-import { Icon, Typography } from "@/components/ui";
+import { Icon, Typography, useColors } from "@/components/ui";
 import { router } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ToolsScreen() {
     /* ******************** Hooks ******************** */
+    const { $color } = useColors();
     /* ******************** Variables ******************** */
     /* ******************** Functions ******************** */
     /* ******************** Effects ******************** */
@@ -19,7 +20,7 @@ export default function ToolsScreen() {
                 <Typography variant="h4" >Tools</Typography>
             </View>
             <View style={s.content}>
-                <TouchableOpacity onPress={() => router.navigate("/(tabs)/tools/chromaticTuner")} style={s.listItem}>
+                <TouchableOpacity onPress={() => router.navigate("/(tabs)/tools/chromaticTuner")} style={[s.listItem, { borderColor: $color.border }]}>
                     <Typography variant='p1'>
                         Chromatic Tuner
                     </Typography>
@@ -34,7 +35,8 @@ const s = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "white"
-    }, titleContainer: {
+    },
+    titleContainer: {
         flexDirection: 'column',
         gap: 12,
         padding: 24
@@ -45,8 +47,7 @@ const s = StyleSheet.create({
     listItem: {
         flexDirection: "row",
         justifyContent: "space-between",
-        borderColor: "#e5e5e5",
-        borderWidth: 0.5,
+        borderTopWidth: 0.5,
         padding: 20
     }
 });

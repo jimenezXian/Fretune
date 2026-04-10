@@ -2,7 +2,7 @@ import { TuneSet } from "@/components/chooseTuning/TuneSet";
 import { useColors } from "@/components/ui";
 import { useSelectedInstrument } from "@/store/useTunerStore";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
@@ -19,9 +19,11 @@ export default function SelectTuningLandingScreen() {
     /* ******************** JSX ******************** */
     return (
         <SafeAreaView style={s.container}>
-            {tunings.map((item) => (
-                <TuneSet key={item.id} name={item.name} tuningId={item.id} style={[s.listItem, { borderColor: $color.borderLight }]} />
-            ))}
+            <View style={s.content}>
+                {tunings.map((item) => (
+                    <TuneSet key={item.id} name={item.name} tuningId={item.id} style={s.listItem} />
+                ))}
+            </View>
         </SafeAreaView>
     );
 }
@@ -30,9 +32,10 @@ const s = StyleSheet.create({
     container: {
         flex: 1,
     },
-
+    content: {
+        paddingHorizontal: 24,
+    },
     listItem: {
         padding: 24,
-        borderTopWidth: 2,
     }
 })
