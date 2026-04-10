@@ -1,5 +1,4 @@
 import { TuneSet } from "@/components/chooseTuning/TuneSet";
-import { useColors } from "@/components/ui";
 import { useSelectedInstrument } from "@/store/useTunerStore";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -10,7 +9,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function SelectTuningLandingScreen() {
     /* ******************** Hooks ******************** */
     const instrument = useSelectedInstrument();
-    const { $color } = useColors();
 
     /* ******************** Variables ******************** */
     const tunings = instrument.tunings;
