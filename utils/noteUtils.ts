@@ -21,10 +21,9 @@ export function centsBetweenFrequencies(frequency: number, targetFrequency: numb
 }
 
 /**
- * Exponential moving average step. 
- * Blends `next` into `previous` weighted by
- * `alpha` (0–1). Lower alpha = smoother/laggier, higher alpha = more responsive.
- * https://en.wikipedi7a.org/wiki/Exponential_smoothing
+ * Exponential Moving Average formula. A blending formula that is relevant as hz fluctuates even on a held note.
+ * This prevents flickering when alpha is played around with in value. Lower is smoother
+ * https://en.wikipedia.org/wiki/Exponential_smoothing
  */
 export function smoothEMA(previous: number, next: number, alpha: number): number {
   return previous * (1 - alpha) + next * alpha;

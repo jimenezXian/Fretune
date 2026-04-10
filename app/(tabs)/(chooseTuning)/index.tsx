@@ -18,8 +18,8 @@ export default function SelectTuningLandingScreen() {
     return (
         <SafeAreaView style={s.container}>
             <View style={s.content}>
-                {tunings.map((item) => (
-                    <TuneSet key={item.id} name={item.name} tuningId={item.id} style={s.listItem} />
+                {tunings.map((tuning) => (
+                    <TuneSet key={tuning.id} tuning={tuning} style={s.listItem} />
                 ))}
             </View>
         </SafeAreaView>
