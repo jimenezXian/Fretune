@@ -22,23 +22,6 @@ export default function chooseTuningLayout() {
           headerTitleAlign: "center",
         }}
       />
-      {
-      /* <Stack.Screen
-    name="guitarTuning"
-    options={{
-        title: "Guitar Tuning",
-        headerLeft: NavigationBackButton,
-        headerTitleAlign: "center",
-    }}   
-    /> */}
-      {/* <Stack.Screen
-        name="bassTuning"
-        options={{
-          title: "Bass Tuning",
-          headerLeft: NavigationBackButton,
-          headerTitleAlign: "center",
-        }}
-      /> */}
     </Stack>
   );
 }
