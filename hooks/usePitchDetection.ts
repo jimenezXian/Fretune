@@ -25,14 +25,12 @@ export function usePitchDetection(): PitchDetectionResult {
     /* ******************** Effects ******************** */
     /* ******************** JSX ******************** */
     useEffect(() => {
-        let isMounted = true;
         let listenerCleanup: (() => void) | undefined;
 
         const init = async () => {
             const { granted } = await requestRecordingPermissionsAsync();
-            if (!isMounted) return;
-
             setHasPermission(granted);
+            
             if (!granted) return;
 
             Pitchy.init({
@@ -42,18 +40,13 @@ export function usePitchDetection(): PitchDetectionResult {
             });
 
             await Pitchy.start();
-            if (!isMounted) return;
-
             setIsActive(true);
 
             const subscription = Pitchy.addListener(({ pitch }) => {
-                if (!isMounted) return;
-
                 const now = Date.now();
                 if (now - lastEmitRef.current < THROTTLE_MS) return;
                 lastEmitRef.current = now;
 
-                // only gate on silence — everything else goes straight through
                 setFrequency(pitch > 0 ? pitch : null);
             });
 
@@ -63,7 +56,6 @@ export function usePitchDetection(): PitchDetectionResult {
         init();
 
         return () => {
-            isMounted = false;
             listenerCleanup?.();
             Pitchy.stop();
             setIsActive(false);
