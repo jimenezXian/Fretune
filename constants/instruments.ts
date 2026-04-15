@@ -31,6 +31,16 @@ export const BASS_4_TUNINGS: ITuning[] = [
       { note: "F", octave: 2, frequency: 87.31 },
     ],
   },
+   {
+    id: "bass-4-c#-standard",
+    name: "C# Standard",
+    strings: [
+      { note: "C#", octave: 1, frequency: 34.65 },
+      { note: "F#", octave: 1, frequency: 46.25 },
+      { note: "B", octave: 1, frequency: 61.74 },
+      { note: "E", octave: 2, frequency: 82.41 },
+    ],
+  },
 ];
 
 export const DEFAULT_INSTRUMENTS: IInstrument[] = [
