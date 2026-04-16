@@ -4,8 +4,7 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import { Stack } from "expo-router";
 import React from "react";
 
-
-const ToolsStackContent = (
+const TuneStackContent = (
     <Stack
         screenOptions={{
             headerTitleAlign: "center",
@@ -15,13 +14,13 @@ const ToolsStackContent = (
         <Stack.Screen
             name="index"
             options={{
-                headerShown: false
+                headerShown: false,
             }}
         />
         <Stack.Screen
-            name="chromaticTuner"
+            name="chooseTuning"
             options={{
-                title: "Chromatic Tuner",
+                title: "Select Tuning",
                 headerLeft: NavigationBackButton,
                 headerTitleAlign: "center",
             }}
@@ -29,16 +28,13 @@ const ToolsStackContent = (
     </Stack>
 );
 
-export default function ToolsLayout() {
+export default function TuneLayout() {
     /* ******************** Hooks ******************** */
     const screenSize = useScreenSize();
-    /* ******************** Variables ******************** */
-    /* ******************** Functions ******************** */
-    /* ******************** Effects ******************** */
     /* ******************** JSX ******************** */
     if (screenSize.isDesktop) {
-        return <WebGutter center> {ToolsStackContent}</WebGutter>
+        return <WebGutter center>{TuneStackContent}</WebGutter>
     }
 
-    return ToolsStackContent;
+    return TuneStackContent;
 }

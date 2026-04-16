@@ -14,6 +14,7 @@ interface ITuneSetProps {
 export function TuneSet({ tuning, style }: ITuneSetProps) {
     /* ******************** Hooks ******************** */
     const router = useRouter();
+    
     const { $color } = useColors();
     const instrument = useSelectedInstrument();
 

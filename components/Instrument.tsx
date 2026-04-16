@@ -16,7 +16,7 @@ export function Instrument({ name, tuning }: IInstrumentProps) {
     /* ******************** Effects ******************** */
     /* ******************** JSX ******************** */
     return (
-        <TouchableOpacity onPress={() => router.navigate("/(tabs)/(chooseTuning)")}>
+        <TouchableOpacity onPress={() => router.navigate("/tune/chooseTuning")}>
             <View style={s.content}>
                 <View style={s.instrumentWrap}>
                     <Typography>
