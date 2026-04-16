@@ -26,6 +26,14 @@ const ToolsStackContent = (
                 headerTitleAlign: "center",
             }}
         />
+        <Stack.Screen
+            name="manageInstruments"
+            options={{
+                title: "Manage Instruments",
+                headerLeft: NavigationBackButton,
+                headerTitleAlign: "center",
+            }}
+        />
     </Stack>
 );
 
