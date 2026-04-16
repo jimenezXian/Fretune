@@ -18,9 +18,14 @@ export default function SelectTuningLandingScreen() {
     return (
         <SafeAreaView style={s.container}>
             <View style={s.content}>
-                {tunings.map((tuning) => (
-                    <TuneSet key={tuning.id} tuning={tuning} style={s.listItem} />
-                ))}
+                {tunings.map((tuning) => {
+                    const isCurrentlySelected = instrument.selectedTuningId == tuning.id;
+
+                    return (
+                        <TuneSet key={tuning.id} tuning={tuning} color={isCurrentlySelected ? "primary" : undefined} />
+                    )
+                }
+                )}
             </View>
         </SafeAreaView>
     );
@@ -33,7 +38,4 @@ const s = StyleSheet.create({
     content: {
         paddingHorizontal: 24,
     },
-    listItem: {
-        padding: 24,
-    }
 })

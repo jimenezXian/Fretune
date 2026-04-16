@@ -2,19 +2,19 @@ import { useSelectedInstrument, useTunerStore } from "@/store/useTunerStore";
 import { ITuning } from "@/types/tuning";
 import { useRouter } from "expo-router";
 import React from "react";
-import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
-import { Icon, Typography, useColors } from "../ui";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Icon, TColor, Typography, useColors } from "../ui";
 
 
 interface ITuneSetProps {
     tuning: ITuning;
-    style?: StyleProp<ViewStyle>;
+    color?: TColor;
 }
 
-export function TuneSet({ tuning, style }: ITuneSetProps) {
+export function TuneSet({ tuning, color }: ITuneSetProps) {
     /* ******************** Hooks ******************** */
     const router = useRouter();
-    
+
     const { $color } = useColors();
     const instrument = useSelectedInstrument();
 
@@ -31,16 +31,16 @@ export function TuneSet({ tuning, style }: ITuneSetProps) {
 
     /* ******************** JSX ******************** */
     return (
-        <TouchableOpacity onPress={selectTuning} style={[s.container, { borderColor: $color.border }, style]}>
+        <TouchableOpacity onPress={selectTuning} style={[s.container, { borderColor: $color.border }]}>
             <View style={s.setLabel}>
-                <Typography variant="p1">
+                <Typography variant="p1" color={color}>
                     {tuning.name}
                 </Typography>
-                <Typography variant="p3" color="textMuted">
+                <Typography variant="p3" color={"textMuted"}>
                     {noteSet}
                 </Typography>
             </View>
-            <Icon name="chevron-right" />
+            <Icon name="chevron-right" color={color} />
         </TouchableOpacity>
     );
 }
@@ -51,7 +51,7 @@ const s = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         borderTopWidth: 0.5,
-        padding: 20,
+        padding: 24,
     },
     setLabel: {
         flexDirection: "column",

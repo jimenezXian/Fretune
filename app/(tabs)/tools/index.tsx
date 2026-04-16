@@ -20,9 +20,15 @@ export default function ToolsScreen() {
                 <Typography variant="h4" >Tools</Typography>
             </View>
             <View style={s.content}>
-                <TouchableOpacity onPress={() => router.navigate("/(tabs)/tools/chromaticTuner")} style={[s.listItem, { borderColor: $color.border }]}>
+                <TouchableOpacity onPress={() => router.navigate("/tools/chromaticTuner")} style={[s.listItem, { borderColor: $color.border }]}>
                     <Typography variant='p1'>
                         Chromatic Tuner
+                    </Typography>
+                    <Icon name="chevron-right" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.navigate("/tools/manageInstruments")} style={[s.listItem, { borderColor: $color.border }]}>
+                    <Typography variant='p1'>
+                        Manage Instruments
                     </Typography>
                     <Icon name="chevron-right" />
                 </TouchableOpacity>
