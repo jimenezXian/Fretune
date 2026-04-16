@@ -6,7 +6,7 @@ A cross-platform guitar tuning app built with Expo and React Native. Tune your i
 
 - Real-time guitar tuning
 - Store and save instruments with custom tunings
-- Cross-compatible across iOS, Android
+- Cross-compatible across iOS, Android, web
 - Persistent local storage with MMKV
 - Lightweight state management with Zustand
 
