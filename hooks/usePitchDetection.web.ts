@@ -1,18 +1,25 @@
 import { BUFFER_SIZE, MAX_MUSICAL_PITCH_FREQUENCY_HZ, MIN_MUSICAL_PITCH_FREQUENCY_HZ, THROTTLE_MS } from '@/constants/pitch';
 import { PitchDetectionResult } from '@/types/pitch';
-import * as PitchFinder from 'pitchfinder';
+import { useIsFocused } from '@react-navigation/native';
+import { ACF2PLUS } from 'pitchfinder';
 import { useEffect, useRef, useState } from 'react';
 
 export function usePitchDetection(): PitchDetectionResult {
+    /* ******************** Hooks ******************** */
+    const isFocused = useIsFocused();
+
     const [frequency, setFrequency] = useState<number | null>(null);
     const [isActive, setIsActive] = useState(false);
     const [hasPermission, setHasPermission] = useState(false);
 
     const lastEmitRef = useRef<number>(0);
-    const cleanupRef = useRef<(() => void) | null>(null);
 
+    /* ******************** Effects ******************** */
     useEffect(() => {
+        if (!isFocused) return;
+
         let isMounted = true;
+        let teardown: (() => void) | undefined;
 
         const init = async () => {
             try {
@@ -21,37 +28,44 @@ export function usePitchDetection(): PitchDetectionResult {
                     stream.getTracks().forEach(t => t.stop());
                     return;
                 }
-
                 setHasPermission(true);
 
                 const audioCtx = new AudioContext();
+                if (audioCtx.state === 'suspended') await audioCtx.resume();
+
                 const source = audioCtx.createMediaStreamSource(stream);
+                const analyser = audioCtx.createAnalyser();
+                analyser.fftSize = BUFFER_SIZE;
+                source.connect(analyser);
 
-                // ScriptProcessorNode is deprecated but has wide support;
-                // swap for AudioWorklet if you need future-proofing
-                const processor = audioCtx.createScriptProcessor(BUFFER_SIZE, 1, 1);
-                const detectPitch = PitchFinder.ACF2PLUS({ sampleRate: audioCtx.sampleRate });
+                const detectPitch = ACF2PLUS({ sampleRate: audioCtx.sampleRate });
+                const buffer = new Float32Array(BUFFER_SIZE);
+                let rafId: number;
 
-                processor.onaudioprocess = (e) => {
+                const loop = () => {
+                    rafId = requestAnimationFrame(loop);
+
                     const now = Date.now();
                     if (now - lastEmitRef.current < THROTTLE_MS) return;
                     lastEmitRef.current = now;
 
-                    const buffer = e.inputBuffer.getChannelData(0);
+                    analyser.getFloatTimeDomainData(buffer);
                     const pitch = detectPitch(buffer);
 
                     if (!isMounted) return;
 
-                    const isInRange = pitch !== null && pitch >= MIN_MUSICAL_PITCH_FREQUENCY_HZ && pitch <= MAX_MUSICAL_PITCH_FREQUENCY_HZ;
-                    setFrequency(isInRange ? pitch : null);
+                    const isInMusicalRange = pitch !== null
+                        && pitch >= MIN_MUSICAL_PITCH_FREQUENCY_HZ
+                        && pitch <= MAX_MUSICAL_PITCH_FREQUENCY_HZ;
+                    setFrequency(isInMusicalRange ? pitch : null);
                 };
 
-                source.connect(processor);
-                processor.connect(audioCtx.destination);
+                rafId = requestAnimationFrame(loop);
                 setIsActive(true);
 
-                cleanupRef.current = () => {
-                    processor.disconnect();
+                teardown = () => {
+                    cancelAnimationFrame(rafId);
+                    analyser.disconnect();
                     source.disconnect();
                     audioCtx.close();
                     stream.getTracks().forEach(t => t.stop());
@@ -65,12 +79,11 @@ export function usePitchDetection(): PitchDetectionResult {
 
         return () => {
             isMounted = false;
-            cleanupRef.current?.();
-            cleanupRef.current = null;
+            teardown?.();
             setIsActive(false);
             setFrequency(null);
         };
-    }, []);
+    }, [isFocused]);
 
     return { frequency, isActive, hasPermission };
 }

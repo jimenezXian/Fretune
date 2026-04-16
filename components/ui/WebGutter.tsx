@@ -1,9 +1,8 @@
 import { useScreenSize } from "@/hooks/useScreenSize";
 import React from "react";
-import { useWindowDimensions, View } from "react-native";
+import { View } from "react-native";
 
 export function WebGutter({ children, center }: { children: React.ReactNode; center?: boolean }) {
-    const windowDimensions = useWindowDimensions();
     const screenSize = useScreenSize();
 
     if (!screenSize.isDesktop) {
@@ -11,7 +10,7 @@ export function WebGutter({ children, center }: { children: React.ReactNode; cen
     }
 
     const maxWidth = 1080;
-    const gutterPadding = Math.max(0, (windowDimensions.width - maxWidth) / 2);
+    const gutterPadding = Math.max(0, (screenSize.width - maxWidth) / 2);
 
     return (
         <View
