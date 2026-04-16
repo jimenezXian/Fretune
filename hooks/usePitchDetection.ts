@@ -1,22 +1,10 @@
+import { BUFFER_SIZE, MAX_MUSICAL_PITCH_FREQUENCY_HZ, MIN_MUSICAL_PITCH_FREQUENCY_HZ, MIN_VOLUME, THROTTLE_MS } from '@/constants/pitch';
+import { PitchDetectionResult } from '@/types/pitch';
 import { useIsFocused } from '@react-navigation/native';
 import { requestRecordingPermissionsAsync } from 'expo-audio';
 import { useEffect, useRef, useState } from "react";
 import Pitchy from 'react-native-pitchy';
 
-//Straight from documentation https://www.npmjs.com/package/react-native-pitchy
-const THROTTLE_MS = 50;
-const BUFFER_SIZE = 4096;
-const MIN_VOLUME = -60;
-
-// Musical pitch range: https://www.phys.unsw.edu.au/jw/notes.html
-const MIN_FREQUENCY_HZ = 25;
-const MAX_FREQUENCY_HZ = 4500;
-
-type PitchDetectionResult = {
-    frequency: number | null;
-    isActive: boolean;
-    hasPermission: boolean;
-}
 
 export function usePitchDetection(): PitchDetectionResult {
     /* ******************** Hooks ******************** */
@@ -59,7 +47,7 @@ export function usePitchDetection(): PitchDetectionResult {
                 if (now - lastEmitRef.current < THROTTLE_MS) return;
                 lastEmitRef.current = now;
 
-                const isInMusicalRange = pitch >= MIN_FREQUENCY_HZ && pitch <= MAX_FREQUENCY_HZ;
+                const isInMusicalRange = pitch >= MIN_MUSICAL_PITCH_FREQUENCY_HZ && pitch <= MAX_MUSICAL_PITCH_FREQUENCY_HZ;
                 setFrequency(isInMusicalRange ? pitch : null);
             });
 
