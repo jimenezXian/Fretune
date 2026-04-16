@@ -1,21 +1,20 @@
-import { useColors } from '@/components/ui';
 import { Icon } from '@/components/ui/Icon';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
 export default function TabLayout() {
-  const { $color } = useColors();
-
   return (
     <Tabs
+      initialRouteName="tune"
       screenOptions={{
-        tabBarActiveTintColor: $color.primary,
-        sceneStyle: { backgroundColor: $color.bg },
         headerShown: false,
-
       }}>
       <Tabs.Screen
         name="index"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="tune"
         options={{
           title: 'Tune',
           tabBarIcon: ({ color }) => <Icon size={28} name="guitar" color={color} />,
@@ -26,12 +25,6 @@ export default function TabLayout() {
         options={{
           title: 'Tools',
           tabBarIcon: ({ color }) => <Icon size={28} name="toolbox" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="(chooseTuning)"
-        options={{
-          href: null,
         }}
       />
     </Tabs>
