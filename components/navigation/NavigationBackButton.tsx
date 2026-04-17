@@ -1,16 +1,16 @@
 import { LogService } from "@/services/LogService";
-import { NativeStackHeaderLeftProps } from "@react-navigation/native-stack";
-import { useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackHeaderBackProps } from "@react-navigation/native-stack";
 import React from "react";
 import { NavigationAction } from "./NavigationAction";
 
-type INavigationBackButtonProps = NativeStackHeaderLeftProps & {
+type INavigationBackButtonProps = NativeStackHeaderBackProps & {
   onPress?: () => void;
 };
 
 export function NavigationBackButton(props: INavigationBackButtonProps) {
   /* ******************** Hooks ******************** */
-  const router = useRouter();
+  const navigation = useNavigation();
 
   /* ******************** Variables ******************** */
   const handlePress = () => {
@@ -18,8 +18,8 @@ export function NavigationBackButton(props: INavigationBackButtonProps) {
       props.onPress();
       return;
     }
-    if (router.canGoBack()) {
-      router.back();
+    if (navigation.canGoBack()) {
+      navigation.goBack();
     }
     else {
       LogService.error({
