@@ -38,7 +38,7 @@ export function NoteTuner({ tuning }: INoteTuner) {
     /* ******************** JSX ******************** */
     return (
         <View style={s.container}>
-            <TuneGauge rawCents={rawCents} isActive={!!isValidReading} frequency={frequency} />
+            <TuneGauge rawCents={rawCents} isActive={!!isValidReading} frequency={frequency} showInTune />
 
             <View style={s.noteGrouping}>
                 {tuning.strings.map((string, index) => {

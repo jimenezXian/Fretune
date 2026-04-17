@@ -9,6 +9,7 @@ import Animated, {
     useSharedValue,
     withSpring,
 } from "react-native-reanimated";
+
 import Svg, { Circle } from "react-native-svg";
 import { Typography } from "../ui";
 
@@ -20,22 +21,43 @@ interface ITuneGauge {
     frequency: number | null;
     /** Lower = smoother/slower response (0-1, default 0.15) */
     smoothing?: number;
+    /** Show feedback when within threshold (specifically for Note Tuner) */
+    showInTune?: boolean;
 }
 
 const SPRINGINESS_CONFIG = { damping: 15, stiffness: 120 };
+const TIMEOUT_DRIFT_CENTER_CONFIG = { damping: 30, stiffness: 15 };
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-export function TuneGauge({ rawCents, isActive, frequency, smoothing = 0.15 }: ITuneGauge) {
+export function TuneGauge({ rawCents, isActive, frequency, smoothing = 0.15, showInTune = false }: ITuneGauge) {
     /* ******************** Hooks ******************** */
     const { $color } = useColors();
 
     const activeFrequency = isActive ? frequency : null;
-    const displayCents = useSmoothedCents(rawCents, activeFrequency, smoothing);
     const needlePosition = useSharedValue(0);
+    const displayCents = useSmoothedCents(rawCents, activeFrequency, smoothing);
 
     /* ******************** Variables ******************** */
     const centsInBounds = Math.max(-100, Math.min(100, displayCents));
-    const isOutOfBounds = Math.abs(displayCents) > 100;
+    const absCents = Math.abs(displayCents);
+    const isOutOfBounds = absCents > 100;
+    const hasReading = displayCents !== 0;
+    const isIdle = centsInBounds === 0 && !isActive;
+    const isInTune = showInTune && absCents <= 10;
+    const centsLabel = `${centsInBounds > 0 ? "+" : ""}${centsInBounds}`;
+
+    let infoText = "—";
+    let infoColor: "textMuted" | "danger" | "success" = "textMuted";
+
+    if (hasReading && isOutOfBounds) {
+        infoText = `${displayCents > 0 ? "Tune down" : "Tune up"} · ${absCents} off`;
+        infoColor = "danger";
+    } else if (hasReading && isInTune) {
+        infoText = `✓ In tune · ${centsLabel}`;
+        infoColor = "success";
+    } else if (hasReading) {
+        infoText = centsLabel;
+    }
 
     /* ******************** Animation ******************** */
     const ringWrapperStyle = useAnimatedStyle(() => ({
@@ -51,25 +73,19 @@ export function TuneGauge({ rawCents, isActive, frequency, smoothing = 0.15 }: I
     }));
 
     /* ******************** Effects ******************** */
+
     useEffect(() => {
-        needlePosition.value = withSpring((centsInBounds + 100) / 200, SPRINGINESS_CONFIG);
-    }, [centsInBounds]);
+        const target = (centsInBounds + 100) / 200;
+        const config = isIdle ? TIMEOUT_DRIFT_CENTER_CONFIG : SPRINGINESS_CONFIG;
+
+        needlePosition.value = withSpring(target, config);
+    }, [centsInBounds, isIdle]);
 
     /* ******************** JSX ******************** */
     return (
         <View style={s.container}>
             <View style={s.infoDisplay}>
-                <View style={s.tuneDirectionLabel}>
-                    {isOutOfBounds && isActive && (
-                        <Typography variant="p2" color="danger">
-                            {displayCents > 0 ? "Tune down" : "Tune up"}
-                        </Typography>
-                    )}
-                </View>
-
-                <Typography variant="p2" color="textMuted">
-                    {isActive ? `${centsInBounds > 0 ? "+" : ""}${centsInBounds}` : ""}
-                </Typography>
+                <Typography variant="p2" color={infoColor}>{infoText}</Typography>
             </View>
 
             <View style={s.gaugeContainer}>
@@ -103,7 +119,8 @@ const s = StyleSheet.create({
     },
     infoDisplay: {
         alignItems: "center",
-        gap: 4,
+        height: 24,
+        justifyContent: "center",
     },
     gaugeContainer: {
         gap: 8,
@@ -132,10 +149,5 @@ const s = StyleSheet.create({
     gaugeLabels: {
         flexDirection: "row",
         justifyContent: "space-between",
-    },
-    tuneDirectionLabel: {
-        alignItems: "center",
-        height: 24,
-        marginBottom: 8,
     },
 });

@@ -27,7 +27,7 @@ export default function ManageInstrumentsScreen() {
                     const isCurrentlySelected = instrument.id == currentInstrument.id;
 
                     return (
-                        <TouchableOpacity key="instrument.id"
+                        <TouchableOpacity key={instrument.id}
                             onPress={isCurrentlySelected ? undefined : () => selectInstrument(instrument.id)}
                             style={[s.instrumentContainer, { borderColor: $color.border }]}>
                             <View style={s.icon}>
