@@ -1,4 +1,4 @@
-import { useColors } from "@/components/ui/theme";
+import { TColor, useColors } from "@/components/ui/theme";
 import { useSmoothedCents } from "@/hooks/useSmoothedCents";
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
@@ -43,16 +43,16 @@ export function TuneGauge({ rawCents, isActive, frequency, smoothing = 0.15, sho
     const isOutOfBounds = absCents > 100;
     const hasReading = displayCents !== 0;
     const isIdle = centsInBounds === 0 && !isActive;
-    const isInTune = showInTune && absCents <= 10;
-    const centsLabel = `${centsInBounds > 0 ? "+" : ""}${centsInBounds}`;
+    const displayInTune = showInTune && absCents <= 10;
 
     let infoText = "—";
-    let infoColor: "textMuted" | "danger" | "success" = "textMuted";
+    let infoColor: TColor = "textMuted";
+    const centsLabel = `${centsInBounds > 0 ? "+" : ""}${centsInBounds}`;
 
     if (hasReading && isOutOfBounds) {
         infoText = `${displayCents > 0 ? "Tune down" : "Tune up"} · ${absCents} off`;
         infoColor = "danger";
-    } else if (hasReading && isInTune) {
+    } else if (hasReading && displayInTune) {
         infoText = `✓ In tune · ${centsLabel}`;
         infoColor = "success";
     } else if (hasReading) {
