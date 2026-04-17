@@ -19,7 +19,7 @@ export default function SelectTuningLandingScreen() {
         <SafeAreaView style={s.container}>
             <View style={s.content}>
                 {tunings.map((tuning) => {
-                    const isCurrentlySelected = instrument.selectedTuningId == tuning.id;
+                    const isCurrentlySelected = instrument.selectedTuningId === tuning.id;
 
                     return (
                         <TuneSet key={tuning.id} tuning={tuning} color={isCurrentlySelected ? "primary" : undefined} />

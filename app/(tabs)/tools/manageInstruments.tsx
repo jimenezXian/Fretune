@@ -5,13 +5,10 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useShallow } from "zustand/shallow";
 
-interface ImanageInstrumentsProps {
-
-}
-
-export default function ManageInstrumentsScreen(props: ImanageInstrumentsProps) {
+export default function ManageInstrumentsScreen() {
     /* ******************** Hooks ******************** */
     const { $color } = useColors();
+
     const { instruments, selectInstrument } = useTunerStore(useShallow((state) => ({
         instruments: state.instruments,
         selectInstrument: state.selectInstrument,
@@ -26,11 +23,11 @@ export default function ManageInstrumentsScreen(props: ImanageInstrumentsProps) 
     return (
         <SafeAreaView edges={["top", "bottom"]}>
             {
-                instruments.map((instrument, index) => {
-                    const isCurrentlySelected = instrument.id == currentInstrument.id;
+                instruments.map((instrument) => {
+                    const isCurrentlySelected = instrument.id === currentInstrument.id;
 
                     return (
-                        <TouchableOpacity key="instrument.id"
+                        <TouchableOpacity key={instrument.id}
                             onPress={isCurrentlySelected ? undefined : () => selectInstrument(instrument.id)}
                             style={[s.instrumentContainer, { borderColor: $color.border }]}>
                             <View style={s.icon}>

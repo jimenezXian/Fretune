@@ -2,7 +2,7 @@ import { HeaderButton } from "@react-navigation/elements";
 import React from "react";
 import { Icon, Spinner, TColor, TIconName, Typography } from "../ui";
 
-type IProps = {
+interface IProps {
   onPress: () => void;
   color?: TColor;
   icon?: TIconName;

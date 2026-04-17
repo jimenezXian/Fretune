@@ -1,12 +1,12 @@
 import { BUFFER_SIZE, MAX_MUSICAL_PITCH_FREQUENCY_HZ, MIN_MUSICAL_PITCH_FREQUENCY_HZ, MIN_VOLUME, THROTTLE_MS } from '@/constants/pitch';
-import { PitchDetectionResult } from '@/types/pitch';
+import { IPitchDetectionResult } from '@/types/pitch';
 import { useIsFocused } from '@react-navigation/native';
 import { requestRecordingPermissionsAsync } from 'expo-audio';
 import { useEffect, useRef, useState } from "react";
 import Pitchy from 'react-native-pitchy';
 
 
-export function usePitchDetection(): PitchDetectionResult {
+export function usePitchDetection(): IPitchDetectionResult {
     /* ******************** Hooks ******************** */
     const isFocused = useIsFocused();
 

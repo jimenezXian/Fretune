@@ -7,11 +7,11 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Typography } from "../ui";
 import { TuneGauge } from "./TuneGauge";
 
-interface INoteTuner {
+interface INoteTunerProps {
     tuning: ITuning;
 }
 
-export function NoteTuner({ tuning }: INoteTuner) {
+export function NoteTuner({ tuning }: INoteTunerProps) {
     /* ******************** Hooks ******************** */
     const { frequency } = usePitchDetection();
     const { $color } = useColors();
@@ -38,7 +38,7 @@ export function NoteTuner({ tuning }: INoteTuner) {
     /* ******************** JSX ******************** */
     return (
         <View style={s.container}>
-            <TuneGauge rawCents={rawCents} isActive={!!isValidReading} frequency={frequency} />
+            <TuneGauge rawCents={rawCents} isActive={!!isValidReading} frequency={frequency} showInTune />
 
             <View style={s.noteGrouping}>
                 {tuning.strings.map((string, index) => {

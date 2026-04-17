@@ -1,10 +1,10 @@
 import { BUFFER_SIZE, MAX_MUSICAL_PITCH_FREQUENCY_HZ, MIN_MUSICAL_PITCH_FREQUENCY_HZ, THROTTLE_MS } from '@/constants/pitch';
-import { PitchDetectionResult } from '@/types/pitch';
+import { IPitchDetectionResult } from '@/types/pitch';
 import { useIsFocused } from '@react-navigation/native';
 import { ACF2PLUS } from 'pitchfinder';
 import { useEffect, useRef, useState } from 'react';
 
-export function usePitchDetection(): PitchDetectionResult {
+export function usePitchDetection(): IPitchDetectionResult {
     /* ******************** Hooks ******************** */
     const isFocused = useIsFocused();
 

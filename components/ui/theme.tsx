@@ -1,3 +1,4 @@
+import { useColorScheme } from "react-native";
 
 interface TColorMap {
   bg: `#${string}`;
@@ -31,9 +32,35 @@ const lightTheme: TColorMap = {
   info: "#1da1f2",
 };
 
+const darkTheme: TColorMap = {
+  bg: "#0b0b0b",
+  textInverted: "#0b0b0b",
+  text: "#f2f2f2",
+  textMuted: "#9ca3af",
+  borderDark: "#2a2a2a",
+  border: "#333333",
+  borderLight: "#1a1a1a",
+  primary: "#1e9df1",
+  secondary: "#f5f5f5",
+  success: "#00b87a",
+  warning: "#f7b928",
+  danger: "#f4212e",
+  info: "#1da1f2",
+};
+
 export type TColor = keyof TColorMap;
 
+export type TSize = "sm" | "md" | "lg";
+
 export function useColors() {
+  const colorsScheme = useColorScheme();
+
+  if (colorsScheme === 'dark') {
+    return {
+      $color: darkTheme,
+    };
+  }
+
   return {
     $color: lightTheme,
   };
