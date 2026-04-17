@@ -24,7 +24,7 @@ export default function ManageInstrumentsScreen() {
         <SafeAreaView edges={["top", "bottom"]}>
             {
                 instruments.map((instrument) => {
-                    const isCurrentlySelected = instrument.id == currentInstrument.id;
+                    const isCurrentlySelected = instrument.id === currentInstrument.id;
 
                     return (
                         <TouchableOpacity key={instrument.id}

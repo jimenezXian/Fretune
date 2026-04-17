@@ -1,4 +1,4 @@
-import { bassGuitarImage } from '@/assets/images';
+import { bassGuitarImage, guitarImage } from '@/assets/images';
 import { SelectedInstrument } from '@/components/chooseTuning/SelectedInstrument';
 import { NoteTuner } from '@/components/tuning';
 import { Typography } from '@/components/ui';
@@ -13,6 +13,7 @@ export default function TuneScreen() {
   const tuning = useSelectedTuning();
 
   const { width, height } = useScreenSize();
+  const isBassGuitar = instrument.id.includes('bass');
 
   return (
     <SafeAreaView
@@ -25,8 +26,8 @@ export default function TuneScreen() {
         <SelectedInstrument name={instrument.name} tuning={tuning.name} />
       </View>
       <NoteTuner tuning={tuning} />
-      <Image source={bassGuitarImage}
-        style={[s.bassImage,
+      <Image source={isBassGuitar ? bassGuitarImage : guitarImage}
+        style={[s.guitarImage,
         { width: width * 0.6, height: height * 0.6 }]}
       />
     </SafeAreaView>
@@ -43,7 +44,7 @@ const s = StyleSheet.create({
     gap: 12,
     padding: 24
   },
-  bassImage: {
+  guitarImage: {
     zIndex: -1,
     position: "absolute",
     width: "75%",

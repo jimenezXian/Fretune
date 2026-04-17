@@ -55,7 +55,7 @@ export type TSize = "sm" | "md" | "lg";
 export function useColors() {
   const colorsScheme = useColorScheme();
 
-  if (colorsScheme == 'dark') {
+  if (colorsScheme === 'dark') {
     return {
       $color: darkTheme,
     };
