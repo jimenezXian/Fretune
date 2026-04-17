@@ -15,6 +15,7 @@ const ActivityIndicatorSizes: Record<TSize, number> = {
 
 export const Spinner = ({ size = "md", color = "primary"}: ISpinnerProps) => {
   const { $color } = useColors();
+  
   const sizeValue = typeof size === "number" ? size : ActivityIndicatorSizes[size];
   const colorValue = $color[color as TColor] || color;
 

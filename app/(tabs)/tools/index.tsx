@@ -40,7 +40,6 @@ export default function ToolsScreen() {
 const s = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white"
     },
     titleContainer: {
         flexDirection: 'column',
