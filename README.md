@@ -10,14 +10,6 @@ A cross-platform guitar tuning app built with Expo and React Native. Tune your i
 - Persistent local storage with MMKV
 - Lightweight state management with Zustand
 
-## Tech Stack
-
-- **Runtime**: Bun
-- **Framework**: Expo / React Native
-- **Web**: React Native Web
-- **State**: Zustand
-- **Storage**: MMKV
-
 ## Getting Started
 
 1. Install dependencies
@@ -35,3 +27,4 @@ A cross-platform guitar tuning app built with Expo and React Native. Tune your i
    From there you can open the app on:
    - Android emulator
    - iOS simulator
+   - web
