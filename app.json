@@ -10,7 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jimenezxian.fretune"
+      "bundleIdentifier": "com.jimenezxian.fretune",
+      "appleTeamId": "L5G4CH5J5H"
     },
     "android": {
       "package": "com.jimenezxian.fretune",
