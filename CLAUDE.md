@@ -36,7 +36,16 @@ Fretune is a guitar tuning app built with Expo (managed workflow) and React Nati
 - Path aliases: `@/*` maps to project root
 - React Compiler is active — do not use manual `useMemo`/`useCallback` unless there's a specific reason
 - Reanimated for all animations — use `useAnimatedStyle`, `useSharedValue`, `withSpring`
-- Component files use PascalCase, hooks use camelCase with `use` prefix
-- Styles defined with `StyleSheet.create` at the bottom of component files
-- Theme colors accessed via `useColors()` hook — never hardcode colors
 - No test framework is set up currently
+
+## Code Style
+
+- **Interfaces**: prefixed with `I` (e.g., `ITuneGaugeProps`, `IStringTuning`)
+- **Components**: named exports, function declarations (`export function Foo()`), not arrow functions
+- **Services**: object-literal pattern with arrow functions (e.g., `export const LogService = { ... }`)
+- **Hooks**: camelCase with `use` prefix, one hook per file
+- **Files**: PascalCase for components, camelCase for hooks/utils/services
+- **Styles**: `StyleSheet.create` assigned to `s` at the bottom of the file
+- **Theme**: colors via `useColors()` → `$color` — never hardcode color values
+- **Section comments**: components use `/* *** Hooks *** */`, `/* *** Variables *** */`, `/* *** Animation *** */`, `/* *** Effects *** */`, `/* *** Functions *** */`, `/* *** JSX *** */` to organize sections
+- **Imports**: sorted — `@/` aliases first, then `react`/`react-native`, then third-party, then relative

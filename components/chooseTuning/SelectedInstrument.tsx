@@ -1,14 +1,14 @@
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Icon, Typography } from "./ui";
+import { Icon, Typography } from "../ui";
 
-interface IInstrumentProps {
+interface ISelectedInstrumentProps {
     name: string;
     tuning: string;
 }
 
-export function Instrument({ name, tuning }: IInstrumentProps) {
+export function SelectedInstrument({ name, tuning }: ISelectedInstrumentProps) {
     /* ******************** Hooks ******************** */
     const router = useRouter();
     /* ******************** Variables ******************** */

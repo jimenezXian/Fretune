@@ -13,7 +13,7 @@ import Animated, {
 import Svg, { Circle } from "react-native-svg";
 import { Typography } from "../ui";
 
-interface ITuneGauge {
+interface ITuneGaugeProps {
     rawCents: number;
     isActive: boolean;
 
@@ -29,7 +29,7 @@ const SPRINGINESS_CONFIG = { damping: 15, stiffness: 120 };
 const TIMEOUT_DRIFT_CENTER_CONFIG = { damping: 30, stiffness: 15 };
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-export function TuneGauge({ rawCents, isActive, frequency, smoothing = 0.15, showInTune = false }: ITuneGauge) {
+export function TuneGauge({ rawCents, isActive, frequency, smoothing = 0.15, showInTune = false }: ITuneGaugeProps) {
     /* ******************** Hooks ******************** */
     const { $color } = useColors();
 

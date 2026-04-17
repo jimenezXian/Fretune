@@ -2,7 +2,7 @@ import { useWindowDimensions } from "react-native";
 
 export type TScreenSize = "mobile" | "tablet" | "desktop";
 
-interface IScreenSize {
+interface IScreenSizeResult {
   size: TScreenSize;
   width: number;
   height: number;
@@ -11,7 +11,7 @@ interface IScreenSize {
   isDesktop: boolean;
 }
 
-export function useScreenSize(): IScreenSize {
+export function useScreenSize(): IScreenSizeResult {
   const { width, height } = useWindowDimensions();
 
   const size: TScreenSize =

@@ -1,5 +1,5 @@
 import { bassGuitarImage } from '@/assets/images';
-import { Instrument } from '@/components/Instrument';
+import { SelectedInstrument } from '@/components/chooseTuning/SelectedInstrument';
 import { NoteTuner } from '@/components/tuning';
 import { Typography } from '@/components/ui';
 import { useScreenSize } from '@/hooks/useScreenSize';
@@ -22,7 +22,7 @@ export default function TuneScreen() {
         <Typography variant='h4'>
           Fretune
         </Typography>
-        <Instrument name={instrument.name} tuning={tuning.name} />
+        <SelectedInstrument name={instrument.name} tuning={tuning.name} />
       </View>
       <NoteTuner tuning={tuning} />
       <Image source={bassGuitarImage}

@@ -1,51 +1,61 @@
 import { smoothEMA } from "@/utils/noteUtils";
 import { useEffect, useRef, useState } from "react";
 
-const DEAD_ZONE = 3;
+const DEAD_ZONE_CENTS = 3;
 const IDLE_TIMEOUT_MS = 3000;
 
 /**
- * Utilizes the EMA filtering equation in order to
- * smooth out flickerings with frequency changes
+ * Smooths raw cent readings using EMA (Exponential Moving Average) filtering
+ * to reduce jitter from frame-to-frame pitch detection noise.
  *
- * Dead zone of 3 cents in order to only change if a 3cents delta occurs.
- * Resets to 0 after 5s of no detected signal.
- * */
+ * - Dead zone: suppresses updates smaller than 3delta cents to prevent UI flicker
+ * - Idle timeout: resets to 0 after 3s of no signal
+ */
 export function useSmoothedCents(
     rawCents: number,
     frequency: number | null,
-    smoothing: number = 0.15,
+    alpha: number = 0.15,
 ): number {
     const [displayCents, setDisplayCents] = useState(0);
     const smoothedRef = useRef(0);
     const displayRef = useRef(0);
-    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    useEffect(() => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = null;
+    /* ******************** Functions ******************** */
+    function clearIdleTimer() {
+        if (idleTimerRef.current) {
+            clearTimeout(idleTimerRef.current);
+            idleTimerRef.current = null;
         }
+    }
+
+    function startIdleTimer() {
+        idleTimerRef.current = setTimeout(() => {
+            smoothedRef.current = 0;
+            displayRef.current = 0;
+            setDisplayCents(0);
+        }, IDLE_TIMEOUT_MS);
+    }
+
+    /* ******************** Effects ******************** */
+    useEffect(() => {
+        clearIdleTimer();
 
         if (!frequency) {
-            timeoutRef.current = setTimeout(() => {
-                smoothedRef.current = 0;
-                displayRef.current = 0;
-                setDisplayCents(0);
-            }, IDLE_TIMEOUT_MS);
-            return () => {
-                if (timeoutRef.current) clearTimeout(timeoutRef.current);
-            };
+            startIdleTimer();
+            return clearIdleTimer;
         }
 
-        smoothedRef.current = smoothEMA(smoothedRef.current, rawCents, smoothing);
+        smoothedRef.current = smoothEMA(smoothedRef.current, rawCents, alpha);
         const rounded = Math.round(smoothedRef.current);
 
-        if (Math.abs(rounded - displayRef.current) >= DEAD_ZONE) {
+        if (Math.abs(rounded - displayRef.current) >= DEAD_ZONE_CENTS) {
             displayRef.current = rounded;
             setDisplayCents(rounded);
         }
     }, [frequency, rawCents]);
+
+
 
     return displayCents;
 }

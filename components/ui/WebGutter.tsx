@@ -2,7 +2,12 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import React from "react";
 import { View } from "react-native";
 
-export function WebGutter({ children, center }: { children: React.ReactNode; center?: boolean }) {
+interface IWebGutterProps {
+    children: React.ReactNode;
+    center?: boolean;
+}
+
+export function WebGutter({ children, center }: IWebGutterProps) {
     const screenSize = useScreenSize();
 
     if (!screenSize.isDesktop) {

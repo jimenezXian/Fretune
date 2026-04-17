@@ -1,6 +1,15 @@
 import { settings } from "@/utils/settingsUtils";
 import * as Sentry from '@sentry/react-native';
-import React from "react";
+import type { ComponentType } from "react";
+
+interface ILogParams {
+    action: string;
+    data?: Record<string, unknown>;
+}
+
+interface IErrorLogParams extends ILogParams {
+    error: unknown;
+}
 
 export const LogService = {
     init: () => {
@@ -13,14 +22,14 @@ export const LogService = {
             integrations: [Sentry.mobileReplayIntegration(), Sentry.feedbackIntegration()],
         });
     },
-    wrapRoot: (component: React.ComponentType<Record<string, unknown>>) => {
+    wrapRoot: (component: ComponentType<Record<string, unknown>>) => {
         return Sentry.wrap(component);
     },
-    info: ({ action, data }: { action: string; data?: Record<string, unknown> }) => {
+    info: ({ action, data }: ILogParams) => {
         console.info(action, data);
         Sentry.logger.info(action, data);
     },
-    error: ({ action, error, data }: { action: string; error: Error | unknown; data?: Record<string, unknown> }) => {
+    error: ({ action, error, data }: IErrorLogParams) => {
         console.error(action, error, data);
         const sentryEventId = Sentry.captureException(new Error(action), {
             originalException: error,
